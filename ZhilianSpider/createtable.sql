@@ -1,24 +1,34 @@
-create table source_zhilian(
-     zwmc varchar(50),
-     fkl varchar(50),
-     gsmc varchar(50),
-     zwyx varchar(50),
-     gzdd varchar(50),
-     zwmcurl varchar(100),
-     fl varchar(200),
-     gzjy varchar(50),
-     zdxl varchar(50),
-     zprs varchar(50),
-     zwms varchar(500),
-     cjsj datetime,
-     source varchar(30),
-     level varchar(10)
- )DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Table structure for source_zhilian
+-- ----------------------------
+DROP TABLE IF EXISTS `source_zhilian`;
+CREATE TABLE `source_zhilian` (
+  `zwmc` varchar(50) DEFAULT NULL,
+  `fkl` varchar(50) DEFAULT NULL,
+  `gsmc` varchar(50) DEFAULT NULL,
+  `zwyx` varchar(50) DEFAULT NULL,
+  `gzdd` varchar(50) DEFAULT NULL,
+  `zwmcurl` varchar(100) DEFAULT NULL,
+  `fbrq` varchar(50) DEFAULT NULL,
+  `fl` varchar(200) DEFAULT NULL,
+  `zwlb` varchar(50) DEFAULT NULL,
+  `gzjy` varchar(50) DEFAULT NULL,
+  `zdxl` varchar(50) DEFAULT NULL,
+  `zprs` varchar(50) DEFAULT NULL,
+  `zwms` varchar(8000) DEFAULT NULL,
+  `cjsj` datetime DEFAULT NULL,
+  `source` varchar(30) DEFAULT NULL,
+  `level` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-create  table source_zhilian_errlog(
-     msg varchar(500),
-     err varchar(500),
-     sj datetime
- )DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Table structure for source_zhilian_errlog
+-- ----------------------------
+DROP TABLE IF EXISTS `source_zhilian_errlog`;
+CREATE TABLE `source_zhilian_errlog` (
+  `msg` varchar(500) DEFAULT NULL,
+  `err` varchar(500) DEFAULT NULL,
+  `sj` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
