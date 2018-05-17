@@ -7,7 +7,6 @@ from ZhilianSpider.items import ZhilianspiderItem
 from ZhilianSpider.commoncode import *
 
 
-# 招聘网站优先级：智联招聘、前程无忧、海投网、应届生求职网、猎聘网、中华英才网。从这6个网站爬取
 class ZhiLianSpider(scrapy.Spider):
     logger = logging.getLogger()
 
@@ -36,6 +35,7 @@ class ZhiLianSpider(scrapy.Spider):
             # 第一页数据
             zw_table = response.xpath('//table[@class="newlist"]')
             # 遍历每个职位
+            print("开始处理第1页数据，职位数量："+str(len(zw_table)-1))
             for i in range(len(zw_table)):
                 if (i > 0):  # 第一个table是表格头部，不是职位信息
                     zwmc = zw_table[i].xpath('.//td[@class="zwmc"]//div/a[1]')[0].xpath('string(.)').extract()
@@ -79,12 +79,12 @@ class ZhiLianSpider(scrapy.Spider):
                 if (countNumber % 60 > 0):
                     temP = 1;
                 countPage = int(countNumber // perPageNumber) + int(temP)
-                for m in range(2,countPage):
+                print("本次抓取职位总数：" + str(countNumber)+",总共"+str(countPage)+"页")
+                for m in range(countPage):
                     if (m > 0):
                         nexturl = theUrl.split('&p=')[0] + '&p=' + str(m + 1)
                         # print(nexturl)
-                        yield Request(nexturl,
-                                      meta={}, callback=self.parse_item)
+                        yield Request(nexturl,meta={"pagenum":m+1}, callback=self.parse_item)
         except Exception as err:
             print(err)
             traceback.print_exc()
@@ -94,8 +94,11 @@ class ZhiLianSpider(scrapy.Spider):
     # 处理一页一页的数据
     def parse_item(self, response):
         try:
+            pagenum = response.meta["pagenum"]
             # 职位信息table
             zw_table = response.xpath('//table[@class="newlist"]')
+            print("开始处理第" + str(pagenum) + "页数据，职位数量：" + str(len(zw_table)-1))
+            print(response.url)
             # 遍历每个职位
             for i in range(len(zw_table)):
                 if (i > 0):  # 第一个table是表格头部，不是职位信息
@@ -165,7 +168,6 @@ class ZhiLianSpider(scrapy.Spider):
             item['zprs'] = zprs
             item['zwms'] = zwms
             # print(item)
-
             self.logger.info("解析成功：" + item['gsmc'] + "-" + item['zwmc'])
             yield item
         except Exception as err:

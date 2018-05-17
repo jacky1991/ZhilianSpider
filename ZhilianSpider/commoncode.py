@@ -10,7 +10,8 @@ class CommonCode(object):
     def insertErrorLog(msg,errorStr):
         logger = logging.getLogger()
         try:
-            cxn = pymysql.Connect(host = '127.0.0.1', user = 'root', passwd = 'sjq54288',db="zhaopin",charset = "utf8")
+            cxn = pymysql.Connect(host='127.0.0.1', user='root', passwd='', db="zhaopin", charset="utf8")
+            # cxn = pymysql.Connect(host = '127.0.0.1', user = 'root', passwd = 'sjq54288',db="zhaopin",charset = "utf8")
             # cxn = pymysql.Connect(host = '192.168.72.164', user = 'root', passwd = 'newcapec',db="zhaopin",charset = "utf8")
             #游标
             cur = cxn.cursor()
